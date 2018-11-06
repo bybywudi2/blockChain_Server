@@ -17,6 +17,37 @@ import java.util.List;
 @WebServlet("/CalculateStartServlet")
 public class CalculateStartServlet extends javax.servlet.http.HttpServlet {
 
+    //用于发送心跳的类
+    class Thread_Heartbeat extends Thread{
+        private String httpurl;
+        private String targetIp;
+
+        public Thread_Heartbeat(String httpurl, String targetIp){
+            this.httpurl = httpurl;
+            this.targetIp = targetIp;
+        }
+
+        public void http_Get(){
+            try {
+                HttpURLConnection connection = null;
+                URL url = new URL(httpurl);
+                connection = (HttpURLConnection)url.openConnection();
+                connection.connect();
+                int responseCode = connection.getResponseCode();
+
+                connection.disconnect();
+            }catch(MalformedURLException e){
+                //e.printStackTrace();
+            }catch(IOException e){
+                //e.printStackTrace();
+            }
+        }
+
+        public void run() {
+            http_Get();
+        }
+
+    }
     //定义一个维护URL的线程，用多线程的方式同时向网络中所有主机发送区块链的URL
     class Thread_Http_Get extends Thread{
         private String httpurl;
@@ -66,7 +97,7 @@ public class CalculateStartServlet extends javax.servlet.http.HttpServlet {
 
         ProblemBlock pb;
         HttpURLConnection connection = null;
-        for(int i=1;i<=10;i++){
+        for(int i=1;i<=10;i++){//检查前10个区块，后续应该变成随机检查
             try {
                 pb = service.getIndexBlock(i);
 

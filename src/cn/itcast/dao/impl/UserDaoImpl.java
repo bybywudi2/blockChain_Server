@@ -162,6 +162,7 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
+	//开始计算的一系列逻辑，扣除硬币-100
 	public boolean startCal(String uip){
 		try {
 			Document document = XmlUtils.getBlocksDocument();
@@ -259,11 +260,7 @@ public class UserDaoImpl implements UserDao {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	//����ע����û��Ƿ������ݿ��д���
-	/* (non-Javadoc)
-	 * @see cn.itcast.dao.impl.UserDao#find(java.lang.String)
-	 */
+
 	@Override
 	public boolean find(String username) {
 		try {
@@ -321,6 +318,7 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
+	//根据hash获得一个问题区块
 	public ProblemBlock getIndexBlock(int hash) {
 		try {
 			Document document = XmlUtils.getResBlocksDocument();

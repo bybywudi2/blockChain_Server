@@ -22,7 +22,6 @@ public class CalculateServlet extends javax.servlet.http.HttpServlet {
 
         public void http_Get(){
             try {
-
                 HttpURLConnection connection = null;
                 URL url = new URL(httpurl);
                 connection = (HttpURLConnection)url.openConnection();
