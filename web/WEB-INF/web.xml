@@ -12,7 +12,7 @@
 
   <filter>
     <filter-name>Filter</filter-name>
-    <filter-class>cn.itcast.web.filter.Filter</filter-class>
+    <filter-class>baiyang.blockchain.web.filter.Filter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>Filter</filter-name>
