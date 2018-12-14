@@ -8,7 +8,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-
+/*
+Client计算完成之后，向Server的CalculateServlet发起请求，由Server的CalculateServlet进行本地的区块更新和区块广播
+该Servlet也用于保持一个更新队列，用来对比三次计算的结果
+ */
 @WebServlet("/CalculateServlet")
 public class CalculateServlet extends javax.servlet.http.HttpServlet {
     public static final int PROBLEMSIZE = 100;
@@ -58,7 +61,7 @@ public class CalculateServlet extends javax.servlet.http.HttpServlet {
         if(!service.findResIndex(index,mid)){
             service.addNewResBlock(index,ip,result,qid,mid,host);
 
-            List<String> list = service.getUserIps();
+            List<String> list = service.getUserIps();//得到除了本机外所有的IP
             String[] ips = new String[list.size()];
             list.toArray(ips);
             int ipLenth = ips.length;
@@ -75,6 +78,9 @@ public class CalculateServlet extends javax.servlet.http.HttpServlet {
             i = i+userTotalNum+1-PROBLEMSIZE;
         }
         int loopNum = 0;//控制循环次数的变量
+        /*
+        再分配任务
+         */
         for(;i<PROBLEMSIZE;i=i+userTotalNum){
             if(!service.findResIndex(Integer.toString(i),mid)){
                 HttpURLConnection connection = null;

@@ -31,7 +31,9 @@ public class CalculateStartServlet extends javax.servlet.http.HttpServlet {
                 HttpURLConnection connection = null;
                 URL url = new URL(httpurl);
                 connection = (HttpURLConnection)url.openConnection();
-                connection.connect();
+                //connection.connect();
+                connection.setConnectTimeout(2000);
+                connection.setRequestMethod("GET");
                 int responseCode = connection.getResponseCode();
                 if(responseCode == 200){
                     service.changeIpStatus(targetIp,1);
